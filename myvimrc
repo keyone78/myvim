@@ -1,1 +1,319 @@
-" test using git"
+"et g:solarized_termtrans=2
+"o
+execute pathogen#infect()
+"call pathogen#helptags
+"---------------------
+"call pathogen#infect()
+"curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+"    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+set number
+set laststatus=2
+set cursorline
+syntax on
+hi CursorLine term=bold cterm=bold guibg=black
+set ttymouse=xterm2  " allow mouse to move vertial window 
+
+" fold methold setting   syntax
+"set foldmethod=indent
+set foldnestmax=30
+set nofoldenable
+"set foldlevel=1
+"----------------------- color syntax setting
+set t_Co=256
+set background=dark
+"colorscheme solarized
+"colorscheme hybrid
+colorscheme PaperColor
+"-------other
+set hlsearch
+
+set completeopt-=preview
+"My leader key "
+let mapleader=","
+set timeoutlen=500
+
+
+
+let g:PaperColor_Dark_Override = { 'background' : '#1c1c1c', 'cursorline' : '#abcdef', 'matchparen' : '#3a3a3a', 'comment' : '#5f875f' }
+" require wget
+" https://github.com/NLKNguyen/papercolor-theme/blob/master/colors/PaperColor.vim
+
+
+" -------------------Start of plug in-------------------
+
+call plug#begin('~/Vim/vimfiles/plugged')
+"1"
+"To make surrounding  tags  "
+Plug 'tpope/vim-surround'
+"2"
+"Toggle mouse using F12"
+Plug 'nvie/vim-togglemouse'
+
+"3"
+"auto completion of code  for python only  require L9
+"to turn off
+"let g:jedi#completions_enabled = 0
+Plug 'davidhalter/jedi-vim'
+
+"4
+Plug 'taglist.vim'
+" open on right side
+let Tlist_Use_Right_Window   = 1
+
+
+Plug 'scrooloose/nerdcommenter'
+
+"6: provide easy align of coding"
+Plug 'junegunn/vim-easy-align'
+
+"7 simple auto if else  switch syntax"
+Plug 'honza/vim-snippets'
+
+"8 writing pandoc documents
+Plug 'vim-pandoc/vim-pandoc'
+" for java coding
+Plug 'pangloss/vim-javascript'
+let g:javascript_plugin_jsdoc = 1
+
+"tab for code
+Plug 'ervandew/supertab'
+
+"fold tag code 
+Plug 'konfekt/fastfold'
+let g:php_folding = 2
+let g:tex_fold_enabled=1
+let g:vimsyn_folding='af'
+let g:xml_syntax_folding = 1
+let g:perl_fold = 1
+
+
+" for css color 
+Plug 'ap/vim-css-color'
+
+" debug tool for PHP perl
+Plug 'joonty/vdebug'
+" syntax indentation / highlight"
+Plug 'yogsototh/haskell-vim'
+Plug 'Twinside/vim-hoogle'
+Plug 'pbrisbin/html-template-syntax'
+
+"--------------------------------------------------------"
+"-----------version control tool ----------------
+"--------------------------------------------------------"
+" Git to use in vim  "
+Plug 'tpope/vim-fugitive'
+" show which line changed using git
+Plug 'airblade/vim-gitgutter'
+" to show git status as nerdtree
+Plug 'xuyuanp/nerdtree-git-plugin'
+
+Plug 'tpope/vim-unimpaired'
+"-----------version control tool ----------------
+
+
+"--------------------------------------------------------"
+" Check for syntax error "
+"--------------------------------------------------------"
+" check syntax
+Plug 'scrooloose/syntastic'
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_check_on_wq = 0
+let g:syntastic_php_checkers = ['php', 'phpcs', 'phpmd']
+
+" line indentation "
+Plug 'yggdroot/indentline'
+" none X terminal
+let g:indentLine_color_tty_light = 7 " (default: 4)
+let g:indentLine_color_dark = 1 " (default: 2)
+let g:indentLine_char = '|'
+
+" To find out more 
+" Plug 'terryma/vim-multiple-cursors'   ''08 oct 2016 
+
+
+
+"linne indentation for python"
+Plug 'indentpython.vim'
+"--------------------------------------------------------"
+" support for other "
+"--------------------------------------------------------"
+" libaray need for other plugin"
+Plug 'L9'
+
+"status bar for vim"
+Plug 'bling/vim-airline'
+
+
+"Recent file open
+Plug 'shougo/neomru.vim'
+
+
+"Just save the update_vim_bundles on your $PATH and run it to update all your
+"Vim bundles used with Vim-pathogen. If there are any changes, they will be
+"merged and displayed.
+Plug 'taq/vim-bundles-updater'
+
+"--------------------------------------------------------"
+" FILE search tool"
+"--------------------------------------------------------"
+"A file exploxer"
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+
+"autocmd vimenter * NERDTree
+""autocmd StdinReadPre * let s:std_in=1
+""autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+""autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+let g:NERDTreeDirArrowExpandable = '+'
+let g:NERDTreeDirArrowCollapsible = '~'
+
+
+" Kind of quick tab ... tagbar
+Plug 'majutsushi/tagbar'
+let g:tagbar_usearrows = 1
+
+Plug 'FuzzyFinder'
+"     <CR>  (|g:fuf_keyOpen|)        - opens in a previous window.
+""<C-j> (|g:fuf_keyOpenSplit|)   - opens in a split window.         <C-k>
+"     (|g:fuf_keyOpenVsplit|)  - opens in a vertical-split window.
+"     <C-l> (|g:fuf_keyOpenTabpage|) - opens in a new tab page.
+"Command           Mode ~         |:FufBuffer|       - Buffer mode
+"(|fuf-buffer-mode|)         |:FufFile|         - File mode (|fuf-file-mode|)
+"|:FufCoverageFile| - Coverage-File mode (|fuf-coveragefile-mode|)
+"|:FufDir|          - Directory mode (|fuf-dir-mode|)         |:FufMruFile|
+"- MRU-File mode (|fuf-mrufile-mode|)         |:FufMruCmd|       - MRU-Command
+"mode (|fuf-mrucmd-mode|)         |:FufBookmarkFile| - Bookmark-File mode
+"(|fuf-bookmarkfile-mode|)         |:FufBookmarkDir|  - Bookmark-Dir mode
+"(|fuf-bookmarkdir-mode|)         |:FufTag|          - Tag mode
+"(|fuf-tag-mode|)         |:FufBufferTag|    - Buffer-Tag mode
+"(|fuf-buffertag-mode|)         |:FufTaggedFile|   - Tagged-File mode
+"(|fuf-taggedfile-mode|)         |:FufJumpList|     - Jump-List mode
+"(|fuf-jumplist-mode|)         |:FufChangeList|   - Change-List mode
+"(|fuf-changelist-mode|)         |:FufQuickfix|     - Quickfix mode
+"(|fuf-quickfix-mode|)         |:FufLine|         - Line mode
+"(|fuf-line-mode|)         |:FufHelp|         - Help mode (|fuf-help-mode|)
+
+
+"File open recently
+Plug 'mru.vim'
+
+" Enable fast search of file
+Plug 'kien/ctrlp.vim'
+
+let g:ctrlp_working_path_mode = 'ra'
+"c' - the directory of the current file.
+"'r' - the nearest ancestor that contains one of these directories or files:
+".git .hg .svn .bzr _darcs
+"'a' - like c, but only if the current working directory outside of CtrlP is
+"not a direct ancestor of the directory of the current file.
+"0 or '' (empty string) - disable this feature.
+
+
+
+
+
+"--------------------------------------------------------"
+" AUTO coding "
+"--------------------------------------------------------"
+
+" Using a non-master branch
+"Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+
+"let g:ycm_key_list_select_completion = ['<TAB>', '<Down>', '<Enter>']
+"Plug 'valloric/youcompleteme'
+"let g:ycm_autoclose_preview_window_after_completion = 1
+"let g:ycm_autoclose_preview_window_after_insertion = 1
+
+
+"--------------------------------------------------------"
+" UNUSE"
+"--------------------------------------------------------"
+
+" destory white space
+""Plug 'bronson/vim-trailing-whitespace'
+" php lib auto completion 
+"Plug 'm2mdas/phpcomplete-extended'
+" for phpcomplete 
+
+"Plug 'shougo/vimproc.vim', {'do' : 'make'}
+
+"--------------------------------------------------------"
+" end UNUSE"
+"--------------------------------------------------------"
+
+
+"--------------------------------------------------------"
+" Quick link
+"--------------------------------------------------------"
+
+
+"--------------------------------------------------------"
+"                map key 
+"--------------------------------------------------------"
+nmap <leader>v :tabedit $MYVIMRC <CR>
+
+"match it
+map <F4> :set background=light<CR>
+"nred tree
+map <C-n> :NERDTreeToggle<CR>
+" for ctrlp
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+" where F1 is for vim help
+map <F2> :FufFile<CR>  " fuzzyfinder
+nnoremap<C-m>:FufMruFile<CR>  " fuzzyfinder
+"ctrl-n for  nerdtree
+nnoremap <F3> :TlistToggle<CR>
+
+nmap <F8> :TagbarToggle<CR>   " for tagbar
+"F12 for togggle mouse
+
+" visual mode map for Easy Align 
+nmap ga <Plug>(EasyAlign)
+xmap ga <Plug>(EasyAlign)
+
+
+"----------------end of nmap key -----------
+call plug#end()
+
+"----------------for php sybtax
+function! PhpSyntaxOverride()
+hi! def link phpDocTags  phpDefine
+hi! def link phpDocParam phpType
+endfunction
+
+augroup phpSyntaxOverride
+autocmd!
+autocmd FileType php call PhpSyntaxOverride()
+augroup END
+
+
+"------------Toggle Errors
+function! ToggleErrors()
+let old_last_winnr = winnr('$')
+lclose
+if old_last_winnr == winnr('$')
+" Nothing was closed, open syntastic error
+" location panel
+Errors
+endif
+endfunction
+
+nnoremap <silent> <C-e> :<C-u>call ToggleErrors()<CR>
+"--------------------kill bell in vim
+set visualbell t_vb=
+if has("autocmd") && has("gui")
+    au GUIEnter * set t_vb=
+     endif
+
+augroup XML
+autocmd!
+autocmd FileType xml setlocal foldmethod=indent foldlevelstart=999 foldminlines=0
+augroup END
+
+"source the vimrc file after saving it
+if has("autocmd")
+	autocmd bufwritepost .vimrc source $MYVIMRC
+endif
