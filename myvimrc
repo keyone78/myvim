@@ -1,5 +1,4 @@
 "et g:solarized_termtrans=2
-"o
 execute pathogen#infect()
 "call pathogen#helptags
 "---------------------
